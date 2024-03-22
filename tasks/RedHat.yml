@@ -1,0 +1,47 @@
+---
+- name:  Disable SELinux
+  selinux:
+    state: disabled
+  register: selinux
+    
+- name: EPEL repo install if distro is CentOS or RHEL
+  yum:
+    name: epel-release
+    state: installed
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: EPEL repo install if distro is Amazon Linux 2
+  shell: 'amazon-linux-extras install epel -y'
+  when: ansible_distribution == 'Amazon'
+
+- name: Upgrade all packages to the latest versions
+  yum:
+    name: '*'
+    state: latest
+    update_cache: yes
+
+- name: Install default packeges
+  yum:
+    name: '{{ redhat_default_packeges }}'
+    state: installed
+
+- name: Install custom packeges
+  yum:
+    name: '{{ redhat_custom_packeges }}'
+    state: installed
+
+- name: Check if kernel has been updated
+  shell:
+    cmd: if [ $(rpm -q kernel|tail -n 1) != kernel-$(uname -r) ]; then echo 'reboot'; else echo 'no'; fi
+  register: kernel_update
+  changed_when: false
+
+- name: Reboot if required
+  reboot:
+    reboot_timeout: 600
+  when: kernel_update.stdout.find("reboot") != -1 or selinux.changed or timezone.changed
+  ignore_errors: '{{ ansible_check_mode }}'
+
+- name: Remove dependencies that are no longer required
+  yum:
+    autoremove: yes

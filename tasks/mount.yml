@@ -1,0 +1,29 @@
+---
+- name: Create fstab file copy
+  copy:
+    src: /etc/fstab
+    dest: /etc/fstab.orig
+    remote_src: yes
+    force: false
+
+- name: Create file system
+  filesystem:
+    fstype: '{{ item.fs_type }}'
+    dev: '{{ item.device_name }}'
+
+- name: Get file system UUID
+  command: lsblk {{ item.device_name }} -no UUID
+  register: uuid
+
+- name: Create mount directory
+  file:
+    path: '{{ item.mount_path }}'
+    state: directory
+
+- name: Mount file system
+  mount:
+    path: '{{ item.mount_path }}'
+    src: 'UUID={{ uuid.stdout }}'
+    fstype: '{{ item.fs_type }}'
+    opts: '{{ item.mount_options }}'
+    state: mounted

@@ -1,0 +1,67 @@
+---
+timezone: 'Etc/UTC'
+redhat_default_packeges:
+  - mc
+  - htop
+  - tcpdump
+  - bash-completion
+  - bind-utils
+  - conntrack-tools
+  - iotop
+  - iperf3
+  - lshw
+  - lsof
+  - mtr
+  - nmap
+  - nmap-ncat
+  - openssh-clients
+  - rsync
+  - sysstat
+  - telnet
+  - unzip
+  - uuid
+  - wget
+  - yum-utils
+  - epel-release
+  - nano
+  - python2-pip
+
+debian_default_packeges:
+  - mc
+  - htop
+  - tcpdump
+  - bash-completion
+  - bind9-host
+  - iotop
+  - iperf3
+  - lshw
+  - lsof
+  - mtr
+  - nmap
+  - openssh-client
+  - rsync
+  - sysstat
+  - telnet
+  - unzip
+  - uuid
+  - wget
+  - net-tools
+  - ethtool
+  - python3-pip
+
+redhat_custom_packeges: []
+debian_custom_packeges: []
+
+mount: []
+# mount:
+# - device_name: /dev/disk/by-id/google-data-disk
+#   mount_path: /opt/aerospike/data
+#   mount_options: 'defaults,nofail'
+#   fs_type: xfs
+
+hostnames: []
+# hostnames:
+#   - name: config-1
+#     ip: '10.1.1.2'
+#   - name: config-2
+#     ip: '10.1.1.3'

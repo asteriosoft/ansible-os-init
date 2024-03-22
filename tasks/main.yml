@@ -1,0 +1,22 @@
+---
+- name: Set timezone to {{ timezone }}
+  timezone:
+    name: '{{ timezone }}'
+  register: timezone
+
+- name: Include OS specific tasks
+  include_tasks: '{{ ansible_os_family }}.yml'
+
+- name: Create and mount file systems
+  include_tasks:
+    file: mount.yml
+  loop: '{{ mount }}'
+  when: (mount is defined)
+
+- name: Add mappings to /etc/hosts
+  blockinfile:
+    path: /etc/hosts
+    block: |
+      {{ item.ip }} {{ item.name }}
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.name }}"
+  loop: "{{ hostnames }}"
