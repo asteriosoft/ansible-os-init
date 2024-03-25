@@ -6,6 +6,7 @@
 
 - name: Include OS specific tasks
   include_tasks: '{{ ansible_os_family }}.yml'
+  tags: packages
 
 - name: Create and mount file systems
   include_tasks:
@@ -19,4 +20,9 @@
     block: |
       {{ item.ip }} {{ item.name }}
     marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.name }}"
-  loop: "{{ hostnames }}"
+  loop: '{{ hostnames }}'
+
+- name: Create users
+  import_tasks:
+    file: useradd.yml
+  tags: useradd

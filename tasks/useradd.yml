@@ -1,0 +1,38 @@
+- name: Include OS specific vars
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Create user accounts
+  user:
+    name: "{{ item | basename | replace('.pub', '') }}"
+    groups: "{{ user_group }}"
+    state: present
+    shell: /bin/bash
+  when: ( users_add is defined and item | basename | replace('.pub', '') in users_add ) or
+        ( users_add is not defined )
+  with_fileglob:
+    - "{{ ssh_keys_dir }}/*.pub"
+
+- name: Add authorized ssh keys
+  authorized_key:
+    user: "{{ item | basename | replace('.pub', '') }}"
+    key: "{{ lookup('file', item) }}"
+  when: ( users_add is defined and item | basename | replace('.pub', '') in users_add ) or
+        ( users_add is not defined )
+  with_fileglob:
+    - "{{ ssh_keys_dir }}/*.pub"
+  ignore_errors: '{{ ansible_check_mode }}'
+
+- name: Allow admin users execute sudo without a password
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: "^%{{ user_group }}"
+    line: "%{{ user_group }} ALL=(ALL) NOPASSWD: ALL"
+
+- name: Delete users defined in users_del list
+  user:
+    name: "{{ item | basename | replace('.pub', '') }}"
+    state: absent
+  when: item | basename | replace('.pub', '') in users_del
+  with_fileglob:
+    - "{{ ssh_keys_dir }}/*.pub"

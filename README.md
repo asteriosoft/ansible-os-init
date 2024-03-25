@@ -1,7 +1,7 @@
 os-init
 =========
 
-Role performing the initial stages of OS configuration, such as updating packages, installing packages, mounting the devices, creating entries in the hosts file.
+Role performing the initial stages of OS configuration, such as updating packages, installing packages, mounting the devices, creating entries in the hosts file, creating users.
 
 Role Variables
 --------------
@@ -28,6 +28,12 @@ Example Playbook
     hostnames:
       - name: artifactory
         ip: '10.0.1.12'
+    ssh_keys_dir: '../{{ playbook_dir }}/ssh-keys'
+    users_add:
+      - alex
+      - john
+    users_del:
+      - bill
 
   roles:
     - os-init

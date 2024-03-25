@@ -29,6 +29,7 @@
   yum:
     name: '{{ redhat_custom_packeges }}'
     state: installed
+  tags: packages
 
 - name: Check if kernel has been updated
   shell:

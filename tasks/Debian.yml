@@ -4,6 +4,7 @@
     update_cache: yes
     cache_valid_time: 3600
     force_apt_get: yes
+  tags: packages
 
 - name: Upgrade all packages to the latest versions
   apt:
@@ -20,6 +21,7 @@
   apt:
     name: '{{ debian_custom_packeges }}'
     state: present
+  tags: packages
 
 - name: Check if reboot is required
   stat:
