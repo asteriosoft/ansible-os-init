@@ -12,12 +12,12 @@
     state: latest
     force_apt_get: yes
 
-- name: Install default packeges
+- name: Install default packages
   apt:
     name: '{{ debian_default_packeges }}'
     state: present
 
-- name: Install custom packeges
+- name: Install custom packages
   apt:
     name: '{{ debian_custom_packeges }}'
     state: present
