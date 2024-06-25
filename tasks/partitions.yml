@@ -3,7 +3,7 @@
   parted:
     device: '{{ item.device }}'
     number: '{{ item.part_number }}'
-    part_start: '{{ item.part_start }}'
+    part_start: "{{ item.part_start | default('0%') }}"
     part_end: '{{ item.part_end }}'
     part_type: "{{ item.part_type | default('primary') }}"
     state: "{{ item.state | default('present') }}"
