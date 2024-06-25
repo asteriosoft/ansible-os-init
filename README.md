@@ -20,8 +20,13 @@ Example Playbook
     debian_custom_packeges:
       - openjdk-21-jdk
       - maven
+    partitions:
+      - device: /dev/nvme5n1
+        part_number: 1
+        part_start: 0GiB
+        part_end: 50GiB
     mount:
-      - device_name: /dev/disk/by-id/google-data-disk
+      - device_name: /dev/nvme5n1p1
         mount_path: /opt/db-data
         mount_options: 'defaults,nofail'
         fs_type: xfs

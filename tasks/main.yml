@@ -8,6 +8,12 @@
   include_tasks: '{{ ansible_os_family }}.yml'
   tags: packages
 
+- name: Create partitions for attached disks
+  include_tasks:
+    file: partitions.yml
+  loop: '{{ partitions }}'
+  when: (partitions is defined)
+
 - name: Create and mount file systems
   include_tasks:
     file: mount.yml

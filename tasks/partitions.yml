@@ -1,0 +1,10 @@
+---
+- name: 'Create a partition number {{ item.part_number }} for {{ item.device }}'
+  parted:
+    device: '{{ item.device }}'
+    number: '{{ item.part_number }}'
+    part_start: '{{ item.part_start }}'
+    part_end: '{{ item.part_end }}'
+    part_type: "{{ item.part_type | default('primary') }}"
+    state: "{{ item.state | default('present') }}"
+  ignore_errors: '{{ ansible_check_mode }}'

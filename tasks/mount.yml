@@ -10,6 +10,7 @@
   filesystem:
     fstype: '{{ item.fs_type }}'
     dev: '{{ item.device_name }}'
+  ignore_errors: '{{ ansible_check_mode }}'
 
 - name: Get file system UUID
   command: lsblk {{ item.device_name }} -no UUID

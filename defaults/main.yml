@@ -52,12 +52,20 @@ debian_default_packeges:
 redhat_custom_packeges: []
 debian_custom_packeges: []
 
+partitions: []
+# partitions:
+#   - device: /dev/disk/by-id/google-local-nvme-ssd-0
+#     part_number: 1
+#     part_start: 0GiB
+#     part_end: 50GiB
+#     part_type: primary
+
 mount: []
 # mount:
-# - device_name: /dev/disk/by-id/google-data-disk
-#   mount_path: /opt/aerospike/data
-#   mount_options: 'defaults,nofail'
-#   fs_type: xfs
+#   - device_name: /dev/disk/by-id/google-data-disk
+#     mount_path: /opt/aerospike/data
+#     mount_options: 'defaults,nofail'
+#     fs_type: xfs
 
 hostnames: []
 # hostnames:
