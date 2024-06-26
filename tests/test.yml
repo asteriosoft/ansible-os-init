@@ -7,11 +7,15 @@
       - openjdk-21-jdk
       - maven
     partitions:
-      - device: /dev/nvme5n1
+      - device: "/dev/nvme5n1"
         part_number: 1
-        part_start: 0GiB
-        part_end: 50GiB
-        part_type: primary
+        part_end: "50GiB"
+        part_type: "primary"
+      - device: "/dev/nvme5n1"
+        part_number: 2
+        part_start: "50GiB"
+        part_end: "100GiB"
+    partitions_check_on_boot: true
     mount:
       - device_name: /dev/nvme5n1p1
         mount_path: /opt/db-data

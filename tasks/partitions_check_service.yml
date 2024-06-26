@@ -1,0 +1,33 @@
+---
+- name: Copy partitions-check.py script
+  copy:
+    src: partitions-check.py
+    dest: /usr/bin/partitions-check.py
+    mode: 0755
+
+- name: Copy partitions-check yaml config
+  template:
+    src: partitions-check.yaml
+    dest: /etc/partitions-check.yaml
+    mode: 0644
+
+- name: Copy partitions-check systemd unit
+  copy:
+    src: partitions-check.service
+    dest: /etc/systemd/system/partitions-check.service
+    owner: root
+    group: root
+    mode: 0644
+  register: result
+
+- name: Systemd reload
+  systemd:
+    daemon_reload: yes
+  when: result.changed
+
+- name: Start partitions-check service
+  service:
+    name: partitions-check
+    enabled: yes
+    state: started
+  ignore_errors: '{{ ansible_check_mode }}'

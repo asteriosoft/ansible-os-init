@@ -1,0 +1,8 @@
+partitions:
+{% for parts in partitions %}
+  - device: "{{ parts.device }}"
+    part_number: {{ parts.part_number }}
+    part_start: "{{ parts.part_start | default('0%') }}"
+    part_end: "{{ parts.part_end }}"
+    part_type: "{{ parts.part_type | default('primary') }}"
+{% endfor %}

@@ -14,6 +14,13 @@
   loop: '{{ partitions }}'
   when: (partitions is defined)
 
+- name: Create partitions-check service 
+  include_tasks:
+    file: partitions_check_service.yml
+  when:
+    - (partitions is defined)
+    - partitions_check_on_boot
+
 - name: Create and mount file systems
   include_tasks:
     file: mount.yml

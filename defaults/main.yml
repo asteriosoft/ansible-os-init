@@ -60,6 +60,10 @@ partitions: []
 #     part_end: 50GiB
 #     part_type: primary
 
+# Some cloud ssd disk are ephemeral and in some cases can be attached on boot without any partition table and data.
+# This flag adds a script that checks the partition table at startup and creates missing partitions.
+partitions_check_on_boot: false
+
 mount: []
 # mount:
 #   - device_name: /dev/disk/by-id/google-data-disk

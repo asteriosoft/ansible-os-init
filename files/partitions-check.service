@@ -1,0 +1,9 @@
+[Unit]
+Description=Check and create partitions
+
+[Service]
+Type=oneshot
+ExecStart=python3 /usr/bin/partitions-check.py
+
+[Install]
+WantedBy=multi-user.target
