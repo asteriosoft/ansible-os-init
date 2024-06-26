@@ -6,7 +6,7 @@ import subprocess
 import os
 import stat
 
-logging.basicConfig(format="%(asctime)s:%(levelname)s:%(message)s", level=logging.INFO)
+logging.basicConfig(format="%(asctime)s:%(levelname)s:%(message)s", filename='/var/log/partition-check.log', level=logging.INFO)
 
 with open("/etc/partitions-check.yaml") as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
