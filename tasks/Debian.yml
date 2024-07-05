@@ -14,12 +14,12 @@
 
 - name: Install default packages
   apt:
-    name: '{{ debian_default_packeges }}'
+    name: '{{ debian_default_packages }}'
     state: present
 
 - name: Install custom packages
   apt:
-    name: '{{ debian_custom_packeges }}'
+    name: '{{ debian_custom_packages }}'
     state: present
   tags: packages
 

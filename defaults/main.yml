@@ -1,6 +1,6 @@
 ---
 timezone: 'Etc/UTC'
-redhat_default_packeges:
+redhat_default_packages:
   - mc
   - htop
   - tcpdump
@@ -26,7 +26,7 @@ redhat_default_packeges:
   - nano
   - python2-pip
 
-debian_default_packeges:
+debian_default_packages:
   - mc
   - htop
   - tcpdump
@@ -49,8 +49,8 @@ debian_default_packeges:
   - ethtool
   - python3-pip
 
-redhat_custom_packeges: []
-debian_custom_packeges: []
+redhat_custom_packages: []
+debian_custom_packages: []
 
 partitions: []
 # partitions:

@@ -20,14 +20,14 @@
     state: latest
     update_cache: yes
 
-- name: Install default packeges
+- name: Install default packages
   yum:
-    name: '{{ redhat_default_packeges }}'
+    name: '{{ redhat_default_packages }}'
     state: installed
 
-- name: Install custom packeges
+- name: Install custom packages
   yum:
-    name: '{{ redhat_custom_packeges }}'
+    name: '{{ redhat_custom_packages }}'
     state: installed
   tags: packages
 

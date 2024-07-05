@@ -17,7 +17,7 @@ Example Playbook
 
   vars:
     timezone: 'Etc/UTC'
-    debian_custom_packeges:
+    debian_custom_packages:
       - openjdk-21-jdk
       - maven
     partitions:
