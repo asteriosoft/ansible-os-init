@@ -34,11 +34,13 @@ Example Playbook
       - name: artifactory
         ip: '10.0.1.12'
     ssh_keys_dir: '../{{ playbook_dir }}/ssh-keys'
-    users_add:
-      - alex
-      - john
-    users_del:
-      - bill
+    users:
+      - name: alex
+        groups: ''
+        state: present
+      - name: alice
+      - name: bill
+        state: absent
 
   roles:
     - os-init

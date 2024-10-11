@@ -38,4 +38,6 @@
 - name: Create users
   import_tasks:
     file: useradd.yml
-  tags: useradd
+  when: 
+    - ( users is defined )
+  tags: users

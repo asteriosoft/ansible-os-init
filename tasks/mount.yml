@@ -5,6 +5,7 @@
     dest: /etc/fstab.orig
     remote_src: yes
     force: false
+  ignore_errors: '{{ ansible_check_mode }}'
 
 - name: Create file system
   filesystem:

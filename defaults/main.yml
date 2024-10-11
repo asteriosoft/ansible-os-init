@@ -80,7 +80,10 @@ hostnames: []
 
 ssh_keys_dir: '{{ playbook_dir }}/ssh-keys'
 
-#users_add:
-#  - test1
-
-users_del: []
+# users:
+#   - name: alex
+#     groups: ''  # do not append to sudo/wheel group (default)
+#     state: present 
+#   - name: alice # state: present and groups: sudo/wheel by default
+#   - name: bill
+#     state: absent # delete user

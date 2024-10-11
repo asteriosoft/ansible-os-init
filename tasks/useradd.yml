@@ -1,38 +1,28 @@
 - name: Include OS specific vars
   include_vars: "{{ ansible_os_family }}.yml"
 
-- name: Create user accounts
+- name: Manage OS users
   user:
-    name: "{{ item | basename | replace('.pub', '') }}"
-    groups: "{{ user_group }}"
-    state: present
+    name: "{{ item.name }}"
+    groups: "{{ item.groups | default(admin_user_group) }}"
+    state: "{{ item.state | default('present') }}"
     shell: /bin/bash
-  when: ( users_add is defined and item | basename | replace('.pub', '') in users_add ) or
-        ( users_add is not defined )
-  with_fileglob:
-    - "{{ ssh_keys_dir }}/*.pub"
+  loop: "{{ users }}"
 
 - name: Add authorized ssh keys
   authorized_key:
-    user: "{{ item | basename | replace('.pub', '') }}"
-    key: "{{ lookup('file', item) }}"
-  when: ( users_add is defined and item | basename | replace('.pub', '') in users_add ) or
-        ( users_add is not defined )
-  with_fileglob:
-    - "{{ ssh_keys_dir }}/*.pub"
+    user: "{{ item.name }}"
+    key: "{{ lookup('file', ssh_keys_dir + '/' + item.name + '.pub') }}"
+  when: 
+    - ( item.state is defined and item.state != 'absent' ) or ( item.state is not defined )
+    - lookup('file', ssh_keys_dir + '/' + item.name + '.pub', errors='ignore')
+  loop: "{{ users }}"
   ignore_errors: '{{ ansible_check_mode }}'
 
 - name: Allow admin users execute sudo without a password
   lineinfile:
     path: /etc/sudoers
     state: present
-    regexp: "^%{{ user_group }}"
-    line: "%{{ user_group }} ALL=(ALL) NOPASSWD: ALL"
-
-- name: Delete users defined in users_del list
-  user:
-    name: "{{ item | basename | replace('.pub', '') }}"
-    state: absent
-  when: item | basename | replace('.pub', '') in users_del
-  with_fileglob:
-    - "{{ ssh_keys_dir }}/*.pub"
+    regexp: "^%{{ admin_user_group }}"
+    line: "%{{ admin_user_group }} ALL=(ALL) NOPASSWD: ALL"
+  ignore_errors: '{{ ansible_check_mode }}'
