@@ -51,6 +51,7 @@ debian_default_packages:
 
 redhat_custom_packages: []
 debian_custom_packages: []
+disable_unattended_upgrades: false
 
 partitions: []
 # partitions:

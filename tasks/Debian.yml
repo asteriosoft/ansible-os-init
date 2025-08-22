@@ -37,3 +37,10 @@
 - name: Remove dependencies that are no longer required
   apt:
     autoremove: yes
+
+- name: Disable unattended upgrades
+  systemd:
+    name: unattended-upgrades
+    enabled: false
+    state: stopped
+  when: '{{ disable_unattended_upgrades }}'
