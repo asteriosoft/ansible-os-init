@@ -40,7 +40,13 @@
 
 - name: Disable unattended upgrades
   systemd:
-    name: unattended-upgrades
+    name: '{{ item }}'
     enabled: false
     state: stopped
   when: '{{ disable_unattended_upgrades }}'
+  with_items:
+      - unattended-upgrades.service
+      - apt-daily-upgrade.service
+      - apt-daily-upgrade.timer
+      - apt-daily.service
+      - apt-daily.timer
